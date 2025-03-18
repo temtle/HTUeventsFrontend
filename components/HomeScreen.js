@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, View, Text, StyleSheet} from 'react-native';
 import EventCard from './EventCard';
+import { useTheme } from './ThemeContext'; // Import component for dark mode
 
 const eventData = {
     volunteering: [
@@ -60,10 +61,12 @@ const eventData = {
 };
 
 const HomeScreen = ({navigation}) => {
+    const { isDarkMode } = useTheme(); // Check if dark mode is on or not
     return (
+        // Added the "isDarkMode &&" statements to change styling if dark mode is on
         <ScrollView style={styles.container}>
             <View>
-                <Text style={styles.header}>Volunteering</Text>
+                <Text style={[styles.header, isDarkMode && styles.darkHeader]}>Volunteering</Text>
                 {eventData.volunteering.map(event => (
                     <EventCard
                         key={event.id}
@@ -75,7 +78,7 @@ const HomeScreen = ({navigation}) => {
                 ))}
             </View>
             <View>
-                <Text style={styles.header}>Clubs</Text>
+                <Text style={[styles.header, isDarkMode && styles.darkHeader]}>Clubs</Text>
                 {eventData.clubs.map(event => (
                     <EventCard
                         key={event.id}
@@ -87,7 +90,7 @@ const HomeScreen = ({navigation}) => {
                 ))}
             </View>
             <View>
-                <Text style={styles.header}>HTU Events</Text>
+                <Text style={[styles.header, isDarkMode && styles.darkHeader]}>HTU Events</Text>
                 {eventData.htuEvents.map(event => (
                     <EventCard
                         key={event.id}
@@ -103,6 +106,7 @@ const HomeScreen = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
+    // Added darkHeader class, and used it above if dark mode is on
     container: {
         flex: 1,
         padding: 10,
@@ -113,6 +117,9 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginVertical: 10,
     },
+    darkHeader: {
+        color: '#ffffff',
+    }
 });
 
 export default HomeScreen;
